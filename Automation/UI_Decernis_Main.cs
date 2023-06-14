@@ -79,7 +79,7 @@ namespace Automation
         public static IWebElement gcomplyPlusMatrixButton => driver.FindElement(By.XPath("//mat-button-toggle[@value='matrix']"));
         public static IWebElement gcomplyPlusTabularButton => driver.FindElement(By.XPath("//mat-button-toggle[@value='tabular']"));
         public static IWebElement gcomplyPlusCommentsFilterField => driver.FindElement(By.XPath("//div[span[label[mat-label[text()='Comments filter']]]]//input"));
-        public static IWebEleme gntcomplyPlusTabularIngrediantSearchField => driver.FindElement(By.XPath("(//input[@name[contains(.,'filter:')]])[1]"));
+        public static IWebElement gcomplyPlusTabularIngrediantSearchField => driver.FindElement(By.XPath("(//input[@name[contains(.,'filter:')]])[1]"));
         public static IWebElement gcomplyPlusTabularDIDSearchField => driver.FindElement(By.XPath("(//input[@name[contains(.,'filter:')]])[2]"));
         public static IWebElement gcomplyPlusTabularCASSearchField => driver.FindElement(By.XPath("(//input[@name[contains(.,'filter:')]])[3]"));
         public static IWebElement gcomplyPlusTabularFunctionSearchField => driver.FindElement(By.XPath("(//input[@name[contains(.,'filter:')]])[4]"));
