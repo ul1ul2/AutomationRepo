@@ -21,6 +21,16 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: DotNetCoreCLI@2
+  name: 'build_01'
+  displayName: 'Build - 01 - $(proj_01_name)'
+  continueOnError: false
+  inputs:
+      command: 'build'
+      projects: '$(proj_01_src)/$(proj_01_name).csproj'
+      arguments: '--verbosity m --configuration $(BuildConfiguration) --output $(Build.StagingDirectory)/$(proj_01_name)'
+      # q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
+
 - task: ArchiveFiles@2
   name: 'zip_01'
   displayName: 'Archive - 01 - $(proj_01_name)'
