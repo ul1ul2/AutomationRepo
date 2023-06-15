@@ -43,6 +43,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  condition: succeededOrFailed()
   inputs:
     command: publish
     publishWebProjects: True
@@ -50,6 +51,7 @@ steps:
     zipAfterPublish: True
 
 - task: PublishPipelineArtifact@1
+  condition: succeededOrFailed()
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'AutomationTestArtifact'
