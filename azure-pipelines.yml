@@ -21,6 +21,18 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: ArchiveFiles@2
+  name: 'zip_01'
+  displayName: 'Archive - 01 - $(proj_01_name)'
+  continueOnError: false
+  inputs:
+      archiveType: 'zip'
+      includeRootFolder: false
+      rootFolderOrFile: '$(Build.StagingDirectory)/$(proj_01_name)'
+      archiveFile: '$(publish_path)/$(proj_01_name).zip'
+      replaceExistingArchive: true
+      quiet: true
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
