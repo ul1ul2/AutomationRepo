@@ -13,8 +13,6 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  proj_01_name: 'Automation'
-  proj_01_src: 'src/$(proj_01_name)'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -22,28 +20,6 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-
-- task: DotNetCoreCLI@2
-  name: 'build_01'
-  displayName: 'Build - 01 - $(proj_01_name)'
-  continueOnError: false
-  inputs:
-      command: 'build'
-      projects: '$(proj_01_src)/$(proj_01_name).csproj'
-      arguments: '--verbosity m --configuration $(BuildConfiguration) --output $(Build.StagingDirectory)/$(proj_01_name)'
-      # q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
-
-- task: ArchiveFiles@2
-  name: 'zip_01'
-  displayName: 'Archive - 01 - $(proj_01_name)'
-  continueOnError: false
-  inputs:
-      archiveType: 'zip'
-      includeRootFolder: false
-      rootFolderOrFile: '$(Build.StagingDirectory)/$(proj_01_name)'
-      archiveFile: '$(publish_path)/$(proj_01_name).zip'
-      replaceExistingArchive: true
-      quiet: true
 
 - task: VSBuild@1
   inputs:
@@ -65,3 +41,15 @@ steps:
     codeCoverageEnabled: true
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(buildConfiguration) --output $(build.artifactStagingDirectory)'
+    zipAfterPublish: True
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'AutomationTestArtifact'
