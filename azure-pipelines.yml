@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  proj_01_name: 'Bifrost.Core'
+  proj_01_name: 'Automation'
   proj_01_src: 'src/$(proj_01_name)'
 
 steps:
