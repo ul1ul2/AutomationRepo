@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
@@ -15,8 +15,9 @@ namespace Automation
 {
     public class UI_Decernis_Main : BaseProjectSettings
     {
-        public static string decernisUser = "jmcdonell";
-        public static string decernisPassword = "@Willis84";
+        public static string decernisUser = "gc-active";
+        public static string decernisPassword = "D3c3rn!s";
+        public static string companyDecernis = "Decernis";
         public static string moduleFoodAdditives = "Food Additives";
         public static string usageAntioxidants = "Antioxidants";
         public static string usageColors = "Colors";
@@ -35,7 +36,7 @@ namespace Automation
         public static string gComplyPlusLandscapeFileXLS2 = "landscape_31-05-2023--15-52-08.xlsx";
         public static string gComplyPlusLandscapeFilePDF1 = "landscape_05-06-2023--19-54-52.pdf";
 
-        public static string country, function, module, recipe, regulation, text, usage;
+        public static string company, country, function, module, recipe, regulation, text, usage;
 
         #region old strings
         //public static string accountCity = "Fun Town";
@@ -52,13 +53,14 @@ namespace Automation
         //├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
         //Webelements
-        private static IWebElement timeOverviewMenu => driver.FindElement(By.XPath("//a[text()='Time Zone ']"));
-        public static IWebElement timeZonetext => driver.FindElement(By.XPath("//h1[text()[contains(.,'Time Zone in UTC')]]"));
         public static IWebElement decernisUsernameField => driver.FindElement(By.XPath("//input[@id='id_username']"));
         public static IWebElement decernisPasswordField => driver.FindElement(By.XPath("//input[@id='id_password']"));
-        public static IWebElement decernisSigninButton => driver.FindElement(By.XPath("//button[@type='submit']"));
+        public static IWebElement decernisSigninWithSSOButton => driver.FindElement(By.XPath("//button[@type='submit']"));
+        public static IWebElement decernisSigninWithPasswordButton => driver.FindElement(By.XPath("//button[text()[contains(.,'Sign in with Password')]]"));
         public static IWebElement decernisSigninAccountPick => driver.FindElement(By.XPath(string.Format("//small[text()='{0}']", emailAddress)));
         public static IWebElement decernisCompanyName => driver.FindElement(By.XPath("//input[@name='company']"));
+        public static IWebElement decernisSignInCompanyNameButton => driver.FindElement(By.XPath("//button[@data-id='id_company']"));
+        public static IWebElement decernisSignInCompanyName => driver.FindElement(By.XPath(string.Format("//span[text()[contains(.,'{0}')]]", company)));
         public static IWebElement decernisWrapper => driver.FindElement(By.XPath("//div[@class='fd_chn_wrap']"));
         public static IWebElement gcomplyURL => driver.FindElement(By.CssSelector("[href*='gcomply.decernis.com']"));
         public static IWebElement gcomplyPlusURL => driver.FindElement(By.CssSelector("[href*='formula.decernis.com']"));
@@ -109,8 +111,6 @@ namespace Automation
 
 
         #region old elements
-        //public static IWebElement decernisSigninWithPasswordButton => driver.FindElement(By.XPath("//button[@type='submit']"));
-
         //private static IWebElement servsafeLoginButton => ServeCommon.driver.FindElement(By.XPath("(//a[text()='Login / Create Account'])[1]"));
         //private static IWebElement servsafeCreateAccountButton => ServeCommon.driver.FindElement(By.XPath("//a[text()='Create Account']"));
         //private static IWebElement servsafeSubmitButton => ServeCommon.driver.FindElement(By.XPath("//a[text()[contains(.,'Submit')]]"));
@@ -152,14 +152,6 @@ namespace Automation
         //├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
         //Micro Methods
-        public static void ClickTimeZoneButton()
-        {
-            //Click login button.
-            timeOverviewMenu.Click();
-
-            //Waits for Login page to load.
-            wait.Until(ExpectedConditions.ElementToBeClickable(timeZonetext));
-        }
         public static void ClickDecernisUsernameField()
         {
             //Click username field
@@ -171,28 +163,43 @@ namespace Automation
             ClickDecernisUsernameField();
             decernisUsernameField.SendKeys(username);
         }
-        public static void ClickSigninButton()
+        public static void ClickSigninSSOButton()
         {
             //Click sign in button.
-            decernisSigninButton.Click();
+            decernisSigninWithSSOButton.Click();
+        }
+        public static void ClickSigninPasswordButton()
+        {
+            //Click sign in button.
+            decernisSigninWithPasswordButton.Click();
         }
         public static void NavigateDecernisSSOUsername(string username)
         {
             //Enter a username and click sign in button.
             EnterDecernisUsername(username);
-            ClickSigninButton();
+            ClickSigninSSOButton();
 
-            wait.Until(ExpectedConditions.ElementToBeClickable(decernisCompanyName));
+            wait.Until(ExpectedConditions.ElementToBeClickable(decernisSigninWithPasswordButton));
         }
         public static void ClickDecernisPasswordField()
         {
             //Click password field
             decernisPasswordField.Click();
         }
+        public static void EnterDecernisSSOPassword(string password)
+        {
+            //Click username field and enter password.
+            ClickSigninSSOButton();
+
+            wait.Until(ExpectedConditions.ElementToBeClickable(decernisPasswordField));
+
+            ClickDecernisPasswordField();
+            decernisPasswordField.SendKeys(password);
+        }
         public static void EnterDecernisPassword(string password)
         {
             //Click username field and enter password.
-            ClickSigninButton();
+            ClickSigninPasswordButton();
 
             wait.Until(ExpectedConditions.ElementToBeClickable(decernisPasswordField));
 
@@ -202,17 +209,41 @@ namespace Automation
         public static void NavigateDecernisSSOPassword(string password)
         {
             //Enter a password and click sign in button.
-            EnterDecernisPassword(password);
-            ClickSigninButton();
+            EnterDecernisSSOPassword(password);
+            ClickSigninSSOButton();
 
             wait.Until(ExpectedConditions.ElementToBeClickable(decernisWrapper));
         }
+        public static void NavigateDecernisPassword(string password)
+        {
+            //Enter a password and click sign in button.
+            EnterDecernisPassword(password);
+            ClickSigninPasswordButton();
+
+            wait.Until(ExpectedConditions.ElementToBeClickable(decernisWrapper));
+        }
+
         public static void NavigateDecernisSSOAccountPick()
         {
             //Click username field and enter password.
-            ClickSigninButton();
+            ClickSigninSSOButton();
             wait.Until(ExpectedConditions.ElementExists(By.XPath(string.Format("//small[text()='{0}']", emailAddress))));
             decernisSigninAccountPick.Click();
+        }
+        public static void SelectDecernisSSOCompany(string companyName)
+        {
+            //Click company name button and select company.
+            ClickDecernisSSOCompanyNameButton();
+            ClickDecernisSSOCompanyName(companyName);
+        }
+        public static void ClickDecernisSSOCompanyName(string companyName)
+        {
+            company = companyName;
+            decernisSignInCompanyName.Click();
+        }
+        public static void ClickDecernisSSOCompanyNameButton()
+        {
+            decernisSignInCompanyNameButton.Click();
         }
         public static void ClickGComplyLink()
         {
@@ -696,11 +727,18 @@ namespace Automation
         //├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
         //Major Methods
-        public static void NavigateDecernisSSO(string username)
+        public static void NavigateDecernisSSOviaSSO(string username)
         {
-            //Enter username, password, and sign in.
+            //Enter username, password, and sign in with SSO.
             NavigateDecernisSSOUsername(username);
             NavigateDecernisSSOAccountPick();
+        }
+        public static void NavigateDecernisSSOviaPassword(string username, string companyName, string password)
+        {
+            //Enter username, password, and sign in with Password.
+            NavigateDecernisSSOUsername(username);
+            SelectDecernisSSOCompany(companyName);
+            NavigateDecernisPassword(password);
         }
         public static void ConfigureLandscapeSearch(string moduleName, string countryName, string usageName, string functionName)
         {
