@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using System;
@@ -142,24 +142,29 @@ namespace Automation
         public void CraqenActiveLogin()
         {
             //Sign into CRAQEN Dashboard.
-            DecernisActiveLogin();
+            DecernisActiveLoginPassword();
             UICMain.WaitForCraqenDashboard();
         }
-        public void DecernisActiveLogin()
+        public void DecernisActiveLoginSSO()
         {
             //Sign into Decernis Dashboard.
-            UIDMain.NavigateDecernisSSO(emailAddress);
+            UIDMain.NavigateDecernisSSOviaSSO(emailAddress);
+        }
+        public void DecernisActiveLoginPassword()
+        {
+            //Sign into Decernis Dashboard.
+            UIDMain.NavigateDecernisSSOviaPassword(UIDMain.decernisUser, UIDMain.companyDecernis, UIDMain.decernisPassword);
         }
         public void gComplyActiveLogin()
         {
             //Sign into Decernis Dashboard and click gComply.
-            DecernisActiveLogin();
+            DecernisActiveLoginPassword();
             UIDMain.ClickGComplyLink();
         }
         public void gComplyPlusActiveLogin()
         {
             //Sign into Decernis Dashboard and click gComplyPlus.
-            DecernisActiveLogin();
+            DecernisActiveLoginPassword();
             UIDMain.ClickGComplyPlusLink();
         }
         #endregion
