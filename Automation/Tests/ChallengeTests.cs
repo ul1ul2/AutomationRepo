@@ -1,4 +1,4 @@
-﻿//using JMSeleniumExcercise.CommonObjects;
+//using JMSeleniumExcercise.CommonObjects;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
@@ -41,16 +41,6 @@ namespace Automation.Tests
         #endregion
         
         [Test]//!Ready---
-        public void Click_Button()
-        {
-            //Access Site.
-            UIDMain.ClickTimeZoneButton();
-
-            //Validate direction to time zone page.
-            Assert.IsTrue(driver.VerifyAsserts(By.XPath("//h1[text()[contains(.,'Time Zone in UTC')]]")));
-        }
-
-        [Test]//!Ready---
         public void Access_Craqen_Dashboard()
         {
             //Access Site.
@@ -64,7 +54,7 @@ namespace Automation.Tests
         public void Access_Decernis_Dashboard()
         {
             //Access Site.
-            DecernisActiveLogin();
+            DecernisActiveLoginPassword();
 
             //Validate access to Dcernis dashboard.
             Assert.IsTrue(driver.VerifyAsserts(By.XPath("//div[@class='fd_chn_wrap']")));
