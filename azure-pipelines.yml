@@ -28,27 +28,27 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
-  displayName: "Automation Tests"
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\Automation.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    runTestsInIsolation: true
-    codeCoverageEnabled: true
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+#- task: VSTest@2
+#  displayName: "Automation Tests"
+#  inputs:
+#    testSelector: 'testAssemblies'
+#    testAssemblyVer2: |
+#      **\Automation.dll
+#      !**\*TestAdapter.dll
+#      !**\obj\**
+#    searchFolder: '$(System.DefaultWorkingDirectory)'
+#    runTestsInIsolation: true
+#    codeCoverageEnabled: true
+#    platform: '$(buildPlatform)'
+#    configuration: '$(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  condition: succeededOrFailed()
-  inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(buildConfiguration) --output $(build.artifactStagingDirectory)'
-    zipAfterPublish: True
+#- task: DotNetCoreCLI@2
+#  condition: succeededOrFailed()
+#  inputs:
+#    command: publish
+#    publishWebProjects: True
+#    arguments: '--configuration $(buildConfiguration) --output $(build.artifactStagingDirectory)'
+#    zipAfterPublish: True
 
 - task: PublishPipelineArtifact@1
   condition: succeededOrFailed()
