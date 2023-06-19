@@ -40,45 +40,47 @@ namespace Automation.Tests
         }
         #endregion
         
-        [Test]//!Ready---
-        public void Access_Craqen_Dashboard()
-        {
-            //Access Site.
-            CraqenActiveLogin();
+        #region Sample Tests (ignore these)
+        //[Test]//!Ready---
+        //public void Access_Craqen_Dashboard()
+        //{
+        //    //Access Site.
+        //    CraqenActiveLogin();
 
-            //Validate access to CRAQEN dashboard.
-            Assert.IsTrue(driver.VerifyAsserts(By.XPath("//span[text()='Capture']")));
-        }
+        //    //Validate access to CRAQEN dashboard.
+        //    Assert.IsTrue(driver.VerifyAsserts(By.XPath("//span[text()='Capture']")));
+        //}
 
-        [Test]//!Ready---
-        public void Access_Decernis_Dashboard()
-        {
-            //Access Site.
-            DecernisActiveLoginPassword();
+        //[Test]//!Ready---
+        //public void Access_Decernis_Dashboard()
+        //{
+        //    //Access Site.
+        //    DecernisActiveLoginPassword();
 
-            //Validate access to Dcernis dashboard.
-            Assert.IsTrue(driver.VerifyAsserts(By.XPath("//div[@class='fd_chn_wrap']")));
-        }
+        //    //Validate access to Dcernis dashboard.
+        //    Assert.IsTrue(driver.VerifyAsserts(By.XPath("//div[@class='fd_chn_wrap']")));
+        //}
 
-        [Test]//!Ready---
-        public void Access_gComply_Dashboard()
-        {
-            //Access Site.
-            gComplyActiveLogin();
+        //[Test]//!Ready---
+        //public void Access_gComply_Dashboard()
+        //{
+        //    //Access Site.
+        //    gComplyActiveLogin();
 
-            //Validate access to gComply dashboard.
-            Assert.IsTrue(driver.VerifyAsserts(By.XPath("//span[text()=' Upload Search Terms ']")));
-        }
+        //    //Validate access to gComply dashboard.
+        //    Assert.IsTrue(driver.VerifyAsserts(By.XPath("//span[text()=' Upload Search Terms ']")));
+        //}
 
-        [Test]//!Ready---
-        public void Access_gComplyPlus_Dashboard()
-        {
-            //Access Site.
-            gComplyPlusActiveLogin();
+        //[Test]//!Ready---
+        //public void Access_gComplyPlus_Dashboard()
+        //{
+        //    //Access Site.
+        //    gComplyPlusActiveLogin();
 
-            //Validate access to gComply dashboard.
-            Assert.IsTrue(driver.VerifyAsserts(By.XPath("//span[text()='Module']")));
-        }
+        //    //Validate access to gComply dashboard.
+        //    Assert.IsTrue(driver.VerifyAsserts(By.XPath("//span[text()='Module']")));
+        //}
+        #endregion
 
         [Test]//>Ready---
         public void gComplyPlus_Country_Name_Matches_Citation_Name() //~ID 47646
