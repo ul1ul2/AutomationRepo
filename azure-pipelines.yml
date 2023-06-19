@@ -16,7 +16,6 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
-
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
@@ -36,12 +35,6 @@ steps:
 #    arguments: '--configuration $(buildConfiguration) --output $(build.artifactStagingDirectory)'
 #    zipAfterPublish: True
 
-- task: PublishPipelineArtifact@1
-  condition: succeededOrFailed()
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'AutomationTestArtifact'
-
 - task: VSTest@2
   displayName: "Automation Tests"
   inputs:
@@ -55,3 +48,9 @@ steps:
     codeCoverageEnabled: true
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: PublishPipelineArtifact@1
+  condition: succeededOrFailed()
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'AutomationTestArtifact'
